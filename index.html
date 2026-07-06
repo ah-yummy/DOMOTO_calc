@@ -1,42 +1,92 @@
-<!DOCTYPE html><html lang='ja'><head>
-<link rel="apple-touch-icon" href="DOMOTOfavicon.png">
-<link rel="icon" href="DOMOTOfavicon.png">
-<meta property="og:title" content="グッズの計算機　そんなものあるわ">
-<meta property="og:description" content="金額をパパッと計算できる便利なグッズ計算機です。">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://ah-yummy.github.io/DOMOTO_calc/">
-<meta property="og:image" content="https://ah-yummy.github.io/DOMOTO_calc/DOMOTOogp.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta property="og:site_name" content="グッズの計算機">
-  <meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>グッズの計算機 そんなものあるわ</title>
-<style>
-body{font-family:system-ui,sans-serif;background:linear-gradient(to bottom, #f8bbd0, #b3e5fc);background-attachment:fixed;margin:0;padding:0 0 90px}
-h1{margin:0;padding:10px 16px;background:#0066ff;color:#fff;text-align:center;font-size:24px;line-height:1.3;font-weight:800;font-family: "HG教科書体", "YuMincho", "游明朝", "MS Mincho", "MS 朝", serif;}
-.controls{padding:12px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.controls button{width:78px;height:40px;font-size:16px;white-space:nowrap;flex-shrink:0}
-.card{background:rgba(255,255,255,0.9);margin:10px;border-radius:12px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,0.15)}.ex{background:rgba(236,236,236,0.9)}
-.badge{background:#666;color:#fff;border-radius:999px;padding:2px 8px;font-size:12px;margin-left:6px}
-.price{font-weight:700;color:#183153}.row{display:flex;justify-content:space-between;align-items:center}
-button{width:38px;height:38px}.qty{font-size:22px;font-weight:700}
-#bar{position:fixed;left:0;right:0;bottom:0;background:#d91e18;color:#fff;padding:12px 8px;display:flex;justify-content:space-around;box-shadow:0 -2px 8px rgba(0,0,0,.25)}
-.barItem{text-align:center}.label{font-size:12px}.value{font-size:24px;font-weight:800}
-.footer-container{display:flex;justify-content:space-between;align-items:flex-end;padding:10px;font-size:12px;color:#666}
-.watermark{color:#888;opacity:0.7;font-size:13px;font-weight:500;padding-right:6px}
-</style></head><body>
-<h1>グッズの計算機<br>そんなものあるわ</h1>
-<div class="controls"><label><input id="filter" type="checkbox"> 選択した商品だけ表示</label><button onclick="resetAll()">リセット</button></div>
-<div id="list"></div>
-<div class="footer-container">
-  <div>※東京ドームコラボTシャツは購入特典対象外です。</div>
-  <div class="watermark">X：@ah_yummy</div>
-</div>
-<div id="bar"></div>
-<script>
-const items=[["フォトパンフ",3500,2,false],["ポリうちわ",1300,2,false],["ハンドタオル",1900,2,false],["アクリルスタンド（ランダム全3種類）",1400,5,false],["アクリルスタンド（コンプリートセット）",4900,2,false],["ビッグシルエットTシャツ",6000,2,false],["メタリックトート（2way）",3900,2,false],["マルチストラップ",2400,2,false],["ハンディファン",5100,2,false],["ペンライト",5800,2,false],["チケットキーホルダー（東京会場Ver.）",1000,2,false],["【東京ドームコラボ】Tシャツ BLACK",6000,2,true],["【東京ドームコラボ】Tシャツ WHITE",6000,2,true]];
-let qty=Array(items.length).fill(0);const fmt=n=>"¥"+n.toLocaleString();
-function draw(){let l=list;l.innerHTML="";let only=filter.checked,total=0,target=0;
-items.forEach((it,i)=>{total+=qty[i]*it[1];if(!it[3])target+=qty[i]*it[1];if(only&&qty[i]==0)return;let d=document.createElement("div");d.className="card"+(it[3]?" ex":"");d.innerHTML=`<b>${it[0]}</b>${it[3]?'<span class="badge">特典対象外</span>':''}<div class=price>${fmt(it[1])}</div><div class=row><button ${qty[i]==0?'disabled':''} onclick='chg(${i},-1)'>−</button><span class=qty>${qty[i]}</span><button ${qty[i]>=it[2]?'disabled':''} onclick='chg(${i},1)'>＋</button></div>`;l.appendChild(d);});
-let t=Math.floor(target/15000),next=15000-target%15000;if(target>0&&target%15000==0)next=15000;
-bar.innerHTML=`<div class=barItem><div class=label>💰合計</div><div class=value>${fmt(total)}</div></div><div class=barItem><div class=label>🎁特典</div><div class=value>${t}セット</div></div><div class=barItem><div class=label>✨次の特典まで</div><div class=value>${fmt(next)}</div></div>`;}
-function chg(i,d){qty[i]=Math.max(0,Math.min(items[i][2],qty[i]+d));draw()} function resetAll(){qty.fill(0);draw()} filter.onchange=draw;draw();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- タイトルと説明文 -->
+    <title>グッズの計算機</title>
+    <meta property="og:title" content="グッズの計算機">
+    <meta property="og:description" content="グッズ代を計算します。購入特典も計算できます。">
+
+    <!-- OGP基本設定 -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ah-yummy.github.io/DOMOTO_calc/">
+    <meta property="og:image" content="https://ah-yummy.github.io/DOMOTO_calc/DOMOTOogp.png">
+    <meta property="og:site_name" content="グッズの計算機">
+    
+    <!-- SNS表示設定 -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- アイコン -->
+    <link rel="apple-touch-icon" href="DOMOTOfavicon.png">
+    <link rel="icon" href="DOMOTOfavicon.png">
+
+    <style>
+        body { font-family: system-ui, sans-serif; background: linear-gradient(to bottom, #f8bbd0, #b3e5fc); background-attachment: fixed; margin: 0; padding: 0 0 90px; }
+        h1 { margin: 0; padding: 10px 16px; background: #0066ff; color: #fff; text-align: center; font-size: 24px; line-height: 1.3; font-weight: 800; font-family: "HG教科書体", "YuMincho", "游明朝", "MS Mincho", "MS 朝", serif; }
+        .controls { padding: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .controls button { width: 78px; height: 40px; font-size: 16px; white-space: nowrap; flex-shrink: 0; }
+        .card { background: rgba(255, 255, 255, 0.9); margin: 10px; border-radius: 12px; padding: 12px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15); }
+        .ex { background: rgba(236, 236, 236, 0.9); }
+        .badge { background: #666; color: #fff; border-radius: 999px; padding: 2px 8px; font-size: 12px; margin-left: 6px; }
+        .price { font-weight: 700; color: #183153; }
+        .row { display: flex; justify-content: space-between; align-items: center; }
+        button { width: 38px; height: 38px; }
+        .qty { font-size: 22px; font-weight: 700; }
+        #bar { position: fixed; left: 0; right: 0; bottom: 0; background: #d91e18; color: #fff; padding: 12px 8px; display: flex; justify-content: space-around; box-shadow: 0 -2px 8px rgba(0, 0, 0, .25); }
+        .barItem { text-align: center; }
+        .label { font-size: 12px; }
+        .value { font-size: 24px; font-weight: 800; }
+        .footer-container { display: flex; justify-content: space-between; align-items: flex-end; padding: 10px; font-size: 12px; color: #666; }
+        .watermark { color: #888; opacity: 0.7; font-size: 13px; font-weight: 500; padding-right: 6px; }
+    </style>
+</head>
+<body>
+
+    <h1>グッズの計算機<br>そんなものあるわ</h1>
+
+    <div class="controls">
+        <label><input id="filter" type="checkbox"> 選択した商品だけ表示</label>
+        <button onclick="resetAll()">リセット</button>
+    </div>
+
+    <div id="list"></div>
+
+    <div class="footer-container">
+        <div>※東京ドームコラボTシャツは購入特典対象外です。</div>
+        <div class="watermark">X：@ah_yummy</div>
+    </div>
+
+    <div id="bar"></div>
+
+    <script>
+        const items = [["フォトパンフ", 3500, 2, false], ["ポリうちわ", 1300, 2, false], ["ハンドタオル", 1900, 2, false], ["アクリルスタンド（ランダム全3種類）", 1400, 5, false], ["アクリルスタンド（コンプリートセット）", 4900, 2, false], ["ビッグシルエットTシャツ", 6000, 2, false], ["メタリックトート（2way）", 3900, 2, false], ["マルチストラップ", 2400, 2, false], ["ハンディファン", 5100, 2, false], ["ペンライト", 5800, 2, false], ["チケットキーホルダー（東京会場Ver.）", 1000, 2, false], ["【東京ドームコラボ】Tシャツ BLACK", 6000, 2, true], ["【東京ドームコラボ】Tシャツ WHITE", 6000, 2, true]];
+        let qty = Array(items.length).fill(0);
+        const fmt = n => "¥" + n.toLocaleString();
+
+        function draw() {
+            let l = list;
+            l.innerHTML = "";
+            let only = filter.checked, total = 0, target = 0;
+            items.forEach((it, i) => {
+                total += qty[i] * it[1];
+                if (!it[3]) target += qty[i] * it[1];
+                if (only && qty[i] == 0) return;
+                let d = document.createElement("div");
+                d.className = "card" + (it[3] ? " ex" : "");
+                d.innerHTML = `<b>${it[0]}</b>${it[3] ? '<span class="badge">特典対象外</span>' : ''}<div class=price>${fmt(it[1])}</div><div class=row><button ${qty[i] == 0 ? 'disabled' : ''} onclick='chg(${i},-1)'>−</button><span class=qty>${qty[i]}</span><button ${qty[i] >= it[2] ? 'disabled' : ''} onclick='chg(${i},1)'>＋</button></div>`;
+                l.appendChild(d);
+            });
+            let t = Math.floor(target / 15000), next = 15000 - target % 15000;
+            if (target > 0 && target % 15000 == 0) next = 15000;
+            bar.innerHTML = `<div class=barItem><div class=label>💰合計</div><div class=value>${fmt(total)}</div></div><div class=barItem><div class=label>🎁特典</div><div class=value>${t}セット</div></div><div class=barItem><div class=label>✨次の特典まで</div><div class=value>${fmt(next)}</div></div>`;
+        }
+
+        function chg(i, d) { qty[i] = Math.max(0, Math.min(items[i][2], qty[i] + d)); draw(); }
+        function resetAll() { qty.fill(0); draw(); }
+        filter.onchange = draw;
+        draw();
+    </script>
+</body>
+</html>
