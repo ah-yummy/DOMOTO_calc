@@ -20,8 +20,8 @@
         .price-area { display: flex; align-items: center; }
         .price { font-weight: 700; color: #183153; }
         .row { display: flex; justify-content: space-between; align-items: center; }
-        .qty-val { font-size: 20px; font-weight: 800; width: 30px; text-align: center; transition: color .2s ease, transform .18s cubic-bezier(.34,1.56,.64,1); }
-        .qty-zero { color: #666; }
+        .qty-val { font-size: 22px; font-weight: 800; width: 30px; text-align: center; transition: color .2s ease, transform .18s cubic-bezier(.34,1.56,.64,1); }
+        .qty-zero { color: #555; }
         .qty-active { color: #000; }
         .qty-pop { transform: scale(1.18); }
         .qty-btn { width: 44px; height: 44px; border-radius: 50%; border: none; background: rgba(255,255,255,.92); box-shadow: 0 2px 6px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.9); color: #333; font-size: 22px; font-weight: 600; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; }
@@ -42,9 +42,7 @@
         
         .info-label { width: 140px; display: flex; justify-content: flex-end; align-items: center; }
         .label-text { margin-right: auto; }
-        /* 「：」を2pt右へ移動（margin-rightを15pxから13pxへ減少） */
         .colon { margin-right: 13px; } 
-        /* 数値を10pt左へ移動（margin-left: -10px）と、文字サイズ14px */
         .val-text { margin-left: -10px; font-size: 14px; }
         
         .bar-right { position: relative; width: 140px; height: 70px; }
@@ -128,7 +126,19 @@
                 });
             });
         }
-        function resetAll() { qty.fill(0); localStorage.removeItem('goodsQty'); draw(); }
+        function resetAll() {
+            qty.fill(0);
+            localStorage.removeItem('goodsQty');
+            draw();
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    document.querySelectorAll(".qty-val").forEach(v => {
+                        v.classList.add("qty-pop");
+                        setTimeout(() => v.classList.remove("qty-pop"), 150);
+                    });
+                });
+            });
+        }
         filter.onchange = draw;
         draw();
     </script>
