@@ -84,7 +84,7 @@
             ["【東京ドームコラボ】Tシャツ BLACK", 6000, 2, true, "https://mitsui-shopping-park.com/ec/p/6260600000036?mallColor=0101"],
             ["【東京ドームコラボ】Tシャツ WHITE", 6000, 2, true, "https://mitsui-shopping-park.com/ec/p/6260600000037?mallColor=0201"]
         ];
-        let qty = Array(items.length).fill(0);
+        let qty = JSON.parse(localStorage.getItem('goodsQty')) || Array(items.length).fill(0);
         const fmt = n => "¥" + n.toLocaleString();
 
         function draw() {
@@ -105,8 +105,8 @@
             bar.innerHTML = `<div class=bar-left><div class=info-row><div class=info-label><span class=label-text>🎁 特典</span><span>：</span></div><span style="white-space:nowrap">${t}セット</span></div><div class=info-row><div class=info-label><span class=label-text>✨️ 次の特典まであと</span><span>：</span></div><span style="white-space:nowrap">¥${next.toLocaleString()}</span></div></div><div class=bar-right><div class=total-area><div class=total-label>合計</div><div class=total-val>${fmt(total)}</div></div></div>`;
         }
 
-        function chg(i, d) { qty[i] = Math.max(0, Math.min(items[i][2], qty[i] + d)); draw(); }
-        function resetAll() { qty.fill(0); draw(); }
+        function chg(i, d) { qty[i] = Math.max(0, Math.min(items[i][2], qty[i] + d)); localStorage.setItem('goodsQty', JSON.stringify(qty)); draw(); }
+        function resetAll() { qty.fill(0); localStorage.removeItem('goodsQty'); draw(); }
         filter.onchange = draw;
         draw();
     </script>
