@@ -90,6 +90,11 @@
             ["【東京ドームコラボ】Tシャツ WHITE", 6000, 2, true, "https://mitsui-shopping-park.com/ec/p/6260600000037?mallColor=0201"]
         ];
         
+        const listEl = document.getElementById("list");
+        const filterEl = document.getElementById("filter");
+        const barLeftEl = document.getElementById("bar-left-content");
+        const totalValEl = document.getElementById("total-val-content");
+
         let qty;
         try {
             qty = JSON.parse(localStorage.getItem("goodsQty"));
@@ -102,9 +107,8 @@
 
         const fmt = n => "¥" + n.toLocaleString();
         function draw() {
-            let l = list;
-            l.innerHTML = "";
-            let only = filter.checked, total = 0, target = 0;
+            listEl.innerHTML = "";
+            let only = filterEl.checked, total = 0, target = 0;
             items.forEach((it, i) => {
                 total += qty[i] * it[1];
                 if (!it[3]) target += qty[i] * it[1];
@@ -112,13 +116,13 @@
                 let d = document.createElement("div");
                 d.className = "card";
                 d.innerHTML = `<b><a href="${it[4]}" target="_blank" rel="noopener noreferrer" class="item-link">${it[0]}</a></b><div class=row><div class=price-area><div class=price>${fmt(it[1])}</div>${it[3] ? '<span class=badge>特典対象外</span>' : ''}</div><div style="display:flex; align-items:center; gap:8px;"><button class="qty-btn" aria-label="数量を減らす" ${qty[i] == 0 ? 'disabled' : ''} onclick='chg(${i},-1)'>−</button><div class="qty-val ${qty[i] == 0 ? 'qty-zero' : 'qty-active'}">${qty[i]}</div><button class="qty-btn" aria-label="数量を増やす" ${qty[i] >= it[2] ? 'disabled' : ''} onclick='chg(${i},1)'>＋</button></div></div>`;
-                l.appendChild(d);
+                listEl.appendChild(d);
             });
             let t = Math.floor(target / 15000), next = 15000 - target % 15000;
             if (target > 0 && target % 15000 == 0) next = 15000;
             
-            document.getElementById('bar-left-content').innerHTML = `<div class=info-row><div class=info-label><span class=label-text>🎁 特典</span><span class=colon>：</span></div><span class="val-text" style="white-space:nowrap">${t}セット</span></div><div class=info-row><div class=info-label><span class=label-text>✨️ 次の特典まであと</span><span class=colon>：</span></div><span class="val-text" style="white-space:nowrap">¥${next.toLocaleString()}</span></div>`;
-            document.getElementById('total-val-content').innerText = fmt(total);
+            barLeftEl.innerHTML = `<div class=info-row><div class=info-label><span class=label-text>🎁 特典</span><span class=colon>：</span></div><span class="val-text" style="white-space:nowrap">${t}セット</span></div><div class=info-row><div class=info-label><span class=label-text>✨️ 次の特典まであと</span><span class=colon>：</span></div><span class="val-text" style="white-space:nowrap">¥${next.toLocaleString()}</span></div>`;
+            totalValEl.innerText = fmt(total);
         }
         function chg(i, d) {
             qty[i] = Math.max(0, Math.min(items[i][2], qty[i] + d));
@@ -149,7 +153,7 @@
                 });
             });
         }
-        filter.onchange = draw;
+        filterEl.onchange = draw;
         draw();
     </script>
 </body>
