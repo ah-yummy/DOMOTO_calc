@@ -39,12 +39,12 @@
         #bar { position: fixed; left: 0; right: 0; bottom: 0; background: #d91e18; color: #fff; height: 70px; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; }
         .bar-left { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
         .info-row { display: flex; align-items: center; font-size: 12px; font-weight: bold; }
-        /* ラベル幅を固定し、コロンを右寄せする */
-        .info-label { width: 140px; display: flex; justify-content: space-between; padding-right: 5px; }
+        /* コロンの位置を5ポイント左へ調整（padding-rightを減らす） */
+        .info-label { width: 140px; display: flex; justify-content: space-between; padding-right: 0px; }
         
-        /* 合計ラベルをabsoluteで絶対座標固定 */
         .bar-right { position: relative; width: 140px; height: 70px; }
-        .total-label { position: absolute; left: 0; top: 25px; font-size: 12px; font-weight: bold; }
+        /* 合計ラベルの位置を5ポイント右へ調整（leftを増やす） */
+        .total-label { position: absolute; left: 5px; top: 25px; font-size: 12px; font-weight: bold; }
         .total-val { position: absolute; right: 0; top: 20px; font-size: 21px; font-weight: 800; }
         
         .footer-container { display: flex; justify-content: space-between; align-items: flex-end; padding: 5px 10px; font-size: 12px; color: #666; }
