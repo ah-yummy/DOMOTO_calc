@@ -32,8 +32,9 @@
         #bar { position: fixed; left: 0; right: 0; bottom: 0; background: #d91e18; color: #fff; display: flex; align-items: center; height: 70px; }
         .bar-left { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2px; padding-left: 20px; }
         .info-row { display: flex; align-items: center; font-size: 12px; font-weight: bold; }
-        /* 特典のラベル幅を広げて改行を防ぎます */
-        .info-label { width: 145px; flex-shrink: 0; display: flex; justify-content: space-between; }
+        /* ラベル幅を戻し、中身を細かく分けて改行を防ぐ工夫をします */
+        .info-label { width: 130px; flex-shrink: 0; display: flex; justify-content: space-between; }
+        .label-text { white-space: nowrap; }
         
         .bar-right { width: 220px; font-weight: bold; text-align: right; padding-right: 20px; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; }
         .total-area { display: flex; width: 160px; justify-content: space-between; align-items: center; }
@@ -101,7 +102,8 @@
             });
             let t = Math.floor(target / 15000), next = 15000 - target % 15000;
             if (target > 0 && target % 15000 == 0) next = 15000;
-            bar.innerHTML = `<div class=bar-left><div class=info-row><div class=info-label><span>🎁 特典</span><span>：</span></div>${t}セット</div><div class=info-row><div class=info-label><span>✨️ 次の特典まであと</span><span>：</span></div>¥${next.toLocaleString()}</div></div><div class=bar-right><div class=total-area><div class=total-label>合計</div><div class=total-val>${fmt(total)}</div></div></div>`;
+            // 改行を防ぐため、info-labelの中身を工夫
+            bar.innerHTML = `<div class=bar-left><div class=info-row><div class=info-label><span class=label-text>🎁 特典</span><span>：</span></div><span style="white-space:nowrap">${t}セット</span></div><div class=info-row><div class=info-label><span class=label-text>✨️ 次の特典まであと</span><span>：</span></div><span style="white-space:nowrap">¥${next.toLocaleString()}</span></div></div><div class=bar-right><div class=total-area><div class=total-label>合計</div><div class=total-val>${fmt(total)}</div></div></div>`;
         }
 
         function chg(i, d) { qty[i] = Math.max(0, Math.min(items[i][2], qty[i] + d)); draw(); }
