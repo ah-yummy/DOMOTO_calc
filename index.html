@@ -76,6 +76,11 @@
         <div class="bar-right"><div class="total-label">合計</div><div class="total-val" id="total-val-content"></div></div>
     </div>
     <script>
+        // PWAのサービスワーカー登録
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./sw.js");
+        }
+
         const items = [
             ["フォトパンフ", 3500, 2, false, "https://store.domotofc.jp/detail.php?goods_id=24"],
             ["ポリうちわ", 1300, 2, false, "https://store.domotofc.jp/detail.php?order=new_desc&goods_id=15"],
