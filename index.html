@@ -178,16 +178,42 @@
             100% { transform: scale(1); }
         }
 
-        .bonus-up {
-            animation: bonus-up .15s ease, sparkle 1s ease;
-        }
 
-        @keyframes bonus-up {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.5); }
-            100% { transform: scale(1); }
-        }
+.bonus-up {
+    animation:
+        bonus-up .15s ease,
+        sparkle .85s ease .15s;
+}
 
+@keyframes sparkle {
+
+    0% {
+        color: #000;
+        text-shadow: none;
+    }
+
+    30% {
+        color: #ffd700;
+        text-shadow:
+            0 0 4px #ffe066,
+            0 0 8px #ffd700,
+            0 0 14px #fff3a0;
+    }
+
+    70% {
+        color: #ffd700;
+        text-shadow:
+            0 0 4px #ffe066,
+            0 0 8px #ffd700,
+            0 0 14px #fff3a0;
+    }
+
+    100% {
+        color: #000;
+        text-shadow: none;
+    }
+
+}
         .bonus-down {
             animation: bonus-down .15s ease;
         }
