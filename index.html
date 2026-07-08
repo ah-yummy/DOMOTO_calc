@@ -179,11 +179,11 @@
         }
 
         .bonus-up {
-            animation:
-                bonus-up .15s ease,
-                sparkle .85s ease .15s;
+    animation:
+        bonus-up 1s cubic-bezier(.22,1,.36,1),
+        sparkle 1s ease;
         }
-
+        
         @keyframes bonus-up {
             0% { transform: scale(1); }
             50% { transform: scale(1.5); }
