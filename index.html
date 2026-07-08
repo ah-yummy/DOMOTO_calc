@@ -21,19 +21,16 @@
         .segment-btn { flex: 1; height: 40px; border-radius: 20px; border: none; background: transparent; color: #555; font-weight: 600; cursor: pointer; transition: .2s; }
         .segment-btn.active { background: #fff; color: #0066ff; box-shadow: 0 2px 4px rgba(0,0,0,.1); }
         
-        .reset-btn { height: 40px; padding: 0 20px; border-radius: 20px; border: none; background: rgba(255,255,255,.92); box-shadow: 0 2px 6px rgba(0,0,0,.12); color: #333; font-size: 15px; font-weight: 600; cursor: pointer; }
+        /* ①リセットボタンのサイズ調整 */
+        .reset-btn { height: 40px; width: 100%; border-radius: 20px; border: none; background: rgba(255,255,255,.92); box-shadow: 0 2px 6px rgba(0,0,0,.12); color: #333; font-size: 15px; font-weight: 600; cursor: pointer; }
         
         .card { background: rgba(255, 255, 255, 0.7); margin: 10px; border-radius: 16px; padding: 14px; backdrop-filter: blur(5px); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
         .badge { background: #666; color: #fff; border-radius: 4px; padding: 2px 6px; font-size: 10px; margin-left: 6px; vertical-align: middle; }
         .price { font-weight: 700; color: #183153; }
         .row { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
         
-        /* リンクスタイル */
         .item-link { color: inherit; text-decoration: underline; font-weight: bold; }
-        
-        /* 非活性時の制御（ボタンエリアのみに限定） */
         .card.disabled .qty-area { opacity: 0.4; pointer-events: none; filter: grayscale(1); }
-        
         .qty-val { font-size: 22px; font-weight: 800; width: 30px; text-align: center; }
         .qty-btn { width: 44px; height: 44px; border-radius: 50%; border: none; background: #fff; font-size: 22px; cursor: pointer; }
         .qty-btn:disabled { opacity: 0.3; }
@@ -41,6 +38,9 @@
         #bar { position: fixed; left: 0; right: 0; bottom: 0; background: #d91e18; color: #fff; height: 70px; display: flex; align-items: center; padding: 0 20px; }
         .bar-left { flex: 1; font-size: 12px; font-weight: bold; }
         .bar-right { width: 140px; text-align: right; font-size: 23px; font-weight: 800; }
+        
+        /* ③ウォーターマーク */
+        .footer-note { text-align: center; font-size: 10px; color: #666; margin-top: 20px; padding-bottom: 80px; }
     </style>
 </head>
 <body>
@@ -53,6 +53,8 @@
         <button class="reset-btn" onclick="resetAll()">リセット</button>
     </div>
     <div id="list"></div>
+    <div class="footer-note">© 2026 Calculated by DOMOTO fan</div>
+    
     <div id="bar">
         <div class="bar-left" id="bar-left-content"></div>
         <div class="bar-right" id="total-val-content"></div>
@@ -117,7 +119,7 @@
                 <div class="card ${en ? '' : 'disabled'}">
                     <b>${linkHTML}${it[4] ? '<span class=badge>特典除外</span>' : ''}</b>
                     <div class="row">
-                        <div class="price">¥${it[1].toLocaleString()}</div>
+                        <div class="price">¥${it[1].toLocaleString()} (税込)</div>
                         <div class="qty-area" style="display:flex;align-items:center;gap:10px">
                             <button class="qty-btn" ${qty[i]==0?'disabled':''} onclick="chg(${i},-1)">−</button>
                             <span class="qty-val">${qty[i]}</span>
