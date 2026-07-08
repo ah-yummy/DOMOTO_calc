@@ -19,9 +19,9 @@
         .controls { padding: 12px; display: flex; align-items: center; gap: 8px; }
         .segment-container { display: flex; gap: 8px; margin-left: auto; }
         
-        .segment-btn { height: 40px; padding: 0 16px; border-radius: 20px; border: none; background: rgba(255,255,255,.92); color: #333; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; box-shadow: 0 2px 6px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.9); }
+        .segment-btn { height: 40px; padding: 0 16px; border-radius: 20px; border: none; background: #ccc; color: #333; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; box-shadow: 0 2px 6px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.9); }
         .segment-btn:active, .reset-btn:active { transform: scale(.94); box-shadow: inset 0 2px 6px rgba(0,0,0,.15); }
-        .segment-btn.active { background: #0066ff; color: #fff; }
+        .segment-btn.active { background: #fff; color: #0066ff; }
         
         .reset-btn { height: 40px; padding: 0 20px; border-radius: 20px; border: none; background: rgba(255,255,255,.92); box-shadow: 0 2px 6px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.9); color: #333; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease; }
         
@@ -136,7 +136,7 @@
             let t = Math.floor(target / 15000), next = 15000 - target % 15000;
             if (target > 0 && target % 15000 == 0) next = 15000;
             document.getElementById("bar-left-content").innerHTML = `<div class=info-row><div class=info-label><span class=label-text>🎁 購入特典</span><span class=colon>：</span></div><span class="val-text" style="white-space:nowrap">${t}セット</span></div><div class=info-row><div class=info-label><span class=label-text>✨️ 次の特典まであと</span><span class=colon>：</span></div><span class="val-text" style="white-space:nowrap">¥${next.toLocaleString()}</span></div>`;
-            totalValEl.innerText = fmt(total);
+            document.getElementById("total-val-content").innerText = fmt(total);
         }
 
         function chg(i, d) {
